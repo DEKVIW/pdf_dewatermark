@@ -1,3 +1,20 @@
+<div align="center">
+
+<a href="https://linux.do/" title="LINUX DO 社区">
+  <img src="docs/assets/linux-do.svg" width="88" height="88" alt="LINUX DO" />
+</a>
+
+### [LINUX&nbsp;DO](https://linux.do/)
+
+**本项目在 [LINUX DO](https://linux.do/) 社区分享与交流** · 欢迎同好围观、反馈、吹水
+
+[![LINUX DO](https://img.shields.io/badge/Community-LINUX%20DO-1c1c1e?style=for-the-badge&labelColor=ffb003&logoColor=white)](https://linux.do/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](./LICENSE)
+
+</div>
+
+---
+
 # 净页 JingYe
 
 面向**扫描版 / 图片型 PDF** 的选色清理桌面工具：按颜色替换浅色水印与杂质，支持区域遮盖、灰度、**组合多步一次导出**与批量处理。
@@ -12,8 +29,6 @@
 | 许可证 | [MIT](./LICENSE) |
 | 当前版本 | 见 `src/pdf_dewatermark/__init__.py` |
 | 详细使用说明 | [博客：扫描版 PDF 选色去水印工具说明](https://blog.yilanapp.com/posts/adbbe073/) |
-
----
 
 ## 适合 / 不适合
 
@@ -39,14 +54,12 @@
 | **组合处理** | 灰度 · 选色 · 区域在同一渲染上按序处理，**一次导出** |
 | **批量** | 多文件共用选色页参数队列导出 |
 
----
+完整图文说明：[以蓝博客 · 扫描版 PDF 选色去水印](https://blog.yilanapp.com/posts/adbbe073/)  
 
 ## 环境要求
 
 - Windows 10/11（GUI 与打包脚本按 Windows 编写）
 - Python **3.10+**（开发机推荐 3.12）
-
----
 
 ## 环境准备与启动
 
@@ -95,8 +108,6 @@ pdf-dewatermark-cli remove 输入.pdf --r 200 --g 200 --b 200 --tolerance 30 -o 
 
 应用内：**帮助 → 使用说明** 会打开完整在线文档。
 
----
-
 ## 使用步骤（极简）
 
 1. 顶栏 **打开** 扫描 PDF（全局共用一本）
@@ -106,8 +117,6 @@ pdf-dewatermark-cli remove 输入.pdf --r 200 --g 200 --b 200 --tolerance 30 -o 
 5. 导出预设默认 **均衡**（约 200 DPI + JPEG；扫描页默认不高于原图分辨率）
 
 更多参数、工作流与 FAQ 见：[使用说明（博客）](https://blog.yilanapp.com/posts/adbbe073/)。
-
----
 
 ## 项目结构
 
@@ -134,8 +143,6 @@ pdf-dewatermark-cli remove 输入.pdf --r 200 --g 200 --b 200 --tolerance 30 -o 
 
 **不会**进入版本库的内容（见 `.gitignore`）：`.venv/`、`build/`、`dist/`、用户 `output/`、日志、个人 PDF、本地偏好等。  
 预编译绿色包请到仓库的 **Releases**（若已发布）下载；源码树中默认不包含 `dist/`。
-
----
 
 ## 自构建 / 打包（绿色 zip）
 
@@ -191,8 +198,6 @@ pytest -q
 
 ## 致谢
 
-- 本项目在 **[Linux.do](https://linux.do/)** 社区分享与交流，欢迎同好反馈与讨论。  
-- 完整图文说明发布于：[以蓝博客](https://blog.yilanapp.com/posts/adbbe073/)  
 - 依赖与开源生态：PyMuPDF、Qt/PySide、QFluentWidgets、PyInstaller 等
 
 ---
