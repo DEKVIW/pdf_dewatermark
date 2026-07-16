@@ -1,0 +1,60 @@
+"""全应用统一图标映射（FluentIcon）。
+
+导航、工具栏、状态区均从此取图标，避免各页硬编码不一致。
+"""
+
+from __future__ import annotations
+
+from qfluentwidgets import FluentIcon as FI
+
+# —— 主导航 ——
+NAV_REMOVE = FI.ERASE_TOOL       # 选色替换 / 清除杂质色
+NAV_REGION = FI.CLIPPING_TOOL   # 区域遮盖
+NAV_GRAY = FI.CONSTRACT         # 灰度（对比/色调）
+NAV_BATCH = FI.LIBRARY          # 批量
+NAV_PIPELINE = FI.LINK          # 组合处理（多步编排）
+NAV_OUTPUT = FI.FOLDER          # 输出目录
+NAV_SETTINGS = FI.SETTING
+NAV_ABOUT = FI.INFO
+NAV_HELP = FI.HELP
+
+# —— 文件与操作 ——
+ICO_OPEN = FI.FOLDER
+ICO_SAVE = FI.SAVE
+ICO_EXPORT = FI.IMAGE_EXPORT
+ICO_DELETE = FI.DELETE
+ICO_ADD = FI.ADD
+ICO_REMOVE = FI.REMOVE
+ICO_CLEAR = FI.BROOM
+ICO_COPY = FI.COPY
+ICO_SYNC = FI.SYNC
+ICO_STOP = FI.CANCEL
+ICO_PLAY = FI.PLAY
+ICO_REFRESH = FI.SYNC
+
+# —— 视图 ——
+ICO_ZOOM_IN = FI.ZOOM_IN
+ICO_ZOOM_OUT = FI.ZOOM_OUT
+ICO_FIT = FI.FIT_PAGE
+ICO_VIEW = FI.VIEW
+ICO_PAGE_PREV = FI.PAGE_LEFT
+ICO_PAGE_NEXT = FI.PAGE_RIGHT
+
+# —— 颜色 / 编辑 ——
+ICO_PICK = FI.PENCIL_INK
+ICO_PALETTE = FI.PALETTE
+ICO_BRUSH = FI.BRUSH
+ICO_EDIT = FI.EDIT
+ICO_FILTER = FI.FILTER
+
+# —— 文档 ——
+ICO_DOCUMENT = FI.DOCUMENT
+ICO_PHOTO = FI.PHOTO
+
+MODE_ICONS = {
+    "remove": NAV_REMOVE,
+    "region": NAV_REGION,
+    "grayscale": NAV_GRAY,
+    "pipeline": NAV_PIPELINE,
+    "batch": NAV_BATCH,
+}

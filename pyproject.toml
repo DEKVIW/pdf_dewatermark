@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pdf-dewatermark"
+version = "0.2.6"
+description = "净页 JingYe — PDF 选色清理桌面工具"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "pymupdf>=1.24.0",
+    "numpy>=1.24.0",
+    "pillow>=10.0.0",
+]
+
+[project.optional-dependencies]
+gui = ["PySide6>=6.6", "PySide6-Fluent-Widgets>=1.6"]
+packaging = ["pyinstaller>=6.0"]
+dev = ["pytest>=7.0"]
+
+[project.scripts]
+jingye = "pdf_dewatermark.gui.app:main"
+pdf-dewatermark = "pdf_dewatermark.gui.app:main"
+pdf-dewatermark-gui = "pdf_dewatermark.gui.app:main"
+pdf-dewatermark-cli = "pdf_dewatermark.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+pdf_dewatermark = ["gui/resources/*"]

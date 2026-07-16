@@ -1,0 +1,65 @@
+# ----- Python / 虚拟环境 -----
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+share/python-wheels/
+*.manifest
+*.spec.bak
+
+# ----- 测试 / 类型 / 格式化缓存 -----
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# ----- 构建与打包产物（方案 A：二进制不进 Git，走 GitHub Releases）-----
+build/
+dist/
+# 若曾本地改过 PyInstaller 临时产物
+*.pyo
+
+# ----- 运行时用户数据 -----
+data/gui_prefs.json
+logs/*
+!logs/.gitkeep
+output/*
+!output/.gitkeep
+
+# 用户/讲义 PDF 默认不入库（避免版权与体积问题）
+*.pdf
+!tests/fixtures/**/*.pdf
+
+# ----- IDE / 系统 -----
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ----- 密钥与本地环境 -----
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# ----- 其它 -----
+*.log
+*.tmp
+*.bak
+.cache/
