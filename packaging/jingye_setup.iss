@@ -10,7 +10,7 @@
 #define MyAppName "净页 JingYe"
 #define MyAppNameEn "JingYe"
 ; 发版时与 pdf_dewatermark.__version__ / branding.APP_VERSION 保持一致
-#define MyAppVersion "0.2.6"
+#define MyAppVersion "0.2.7"
 #define MyAppPublisher "JingYe"
 #define MyAppExeName "JingYe.exe"
 #define MyAppURL "https://github.com"

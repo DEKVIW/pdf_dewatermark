@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pdf-dewatermark"
-version = "0.2.6"
+version = "0.2.7"
 description = "净页 JingYe — PDF 选色清理桌面工具"
 readme = "README.md"
 requires-python = ">=3.10"

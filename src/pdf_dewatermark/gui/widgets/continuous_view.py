@@ -795,8 +795,13 @@ class ContinuousPdfView(QWidget):
                 p.drawRect(x, y, g.width - 1, g.height - 1)
 
         if self._mode == MODE_RECT and self._drag_start and self._drag_current:
-            p.setPen(QPen(QColor(74, 134, 232), 2, Qt.DashLine))
-            p.drawRect(QRect(self._drag_start, self._drag_current).normalized())
+            # 拖拽中的预览框：半透明填充 + 虚线边，能看见底下内容
+            r = QRect(self._drag_start, self._drag_current).normalized()
+            p.setPen(QPen(QColor(37, 99, 235, 220), 2, Qt.DashLine))
+            p.setBrush(QColor(56, 132, 255, 48))
+            p.drawRect(r)
+            p.setBrush(Qt.NoBrush)
+
 
     # ----- interaction -----
 

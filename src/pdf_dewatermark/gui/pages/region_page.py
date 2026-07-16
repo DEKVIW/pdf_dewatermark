@@ -241,15 +241,24 @@ class RegionPage(QWidget):
             return image
         page = self._doc[page_index]
         pw, ph = page.rect.width, page.rect.height
-        out = image.convert("RGBA")
-        draw = ImageDraw.Draw(out, "RGBA")
+        base = image.convert("RGBA")
+        # 透明层单独画再 alpha 合成；若直接画在底图再 convert("RGB") 会丢掉 alpha，变成实心蓝
+        layer = Image.new("RGBA", base.size, (0, 0, 0, 0))
+        draw = ImageDraw.Draw(layer, "RGBA")
         for r in rects:
             x0, y0, x1, y1 = r.normalized()
-            sx = out.width / pw if pw else 1
-            sy = out.height / ph if ph else 1
+            sx = base.width / pw if pw else 1
+            sy = base.height / ph if ph else 1
             box = (x0 * sx, y0 * sy, x1 * sx, y1 * sy)
-            draw.rectangle(box, fill=(74, 134, 232, 90), outline=(37, 99, 235, 220), width=2)
-        return out.convert("RGB")
+            # 仅预览叠层：淡蓝半透明，方便对照底下正文；导出仍是不透明白填
+            draw.rectangle(
+                box,
+                fill=(56, 132, 255, 55),
+                outline=(37, 99, 235, 210),
+                width=2,
+            )
+        return Image.alpha_composite(base, layer).convert("RGB")
+
 
     def _on_rect(self, page: int, x0: float, y0: float, x1: float, y1: float) -> None:
         if not self._doc:
