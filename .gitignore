@@ -63,3 +63,6 @@ desktop.ini
 *.tmp
 *.bak
 .cache/
+
+# ----- 维护者本地脚本（不进入公开仓库 / 不被检索）-----
+scripts/private/

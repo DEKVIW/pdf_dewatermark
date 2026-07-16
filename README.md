@@ -126,7 +126,7 @@ pdf-dewatermark-cli remove 输入.pdf --r 200 --g 200 --b 200 --tolerance 30 -o 
 ├── docs/                    # 设计与开发说明
 ├── legacy/                  # 改造前脚本（参考）
 ├── packaging/               # PyInstaller / 元数据 / Inno 可选
-├── scripts/                 # 开发环境、本地构建等脚本
+├── scripts/                 # 开发环境与打包脚本（dev_setup / build_*）
 ├── pyproject.toml
 ├── LICENSE                  # MIT
 └── README.md
