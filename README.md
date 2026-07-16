@@ -10,7 +10,7 @@
 | 英文名 | **JingYe** |
 | 包名 | `pdf_dewatermark` |
 | 许可证 | [MIT](./LICENSE) |
-| 当前版本 | 见 `src/pdf_dewatermark/__init__.py` / [Releases](../../releases) |
+| 当前版本 | 见 `src/pdf_dewatermark/__init__.py` |
 | 详细使用说明 | [博客：扫描版 PDF 选色去水印工具说明](https://blog.yilanapp.com/posts/adbbe073/) |
 
 ---
@@ -45,7 +45,6 @@
 
 - Windows 10/11（GUI 与打包脚本按 Windows 编写）
 - Python **3.10+**（开发机推荐 3.12）
-- 可选：[GitHub CLI (`gh`)](https://cli.github.com/) — 用于一键创建仓库 / 上传 Release
 
 ---
 
@@ -127,25 +126,25 @@ pdf-dewatermark-cli remove 输入.pdf --r 200 --g 200 --b 200 --tolerance 30 -o 
 ├── docs/                    # 设计与开发说明
 ├── legacy/                  # 改造前脚本（参考）
 ├── packaging/               # PyInstaller / 元数据 / Inno 可选
-├── scripts/                 # 开发、开源初始化、构建与发布
+├── scripts/                 # 开发环境、本地构建等脚本
 ├── pyproject.toml
 ├── LICENSE                  # MIT
 └── README.md
 ```
 
-**不会**提交到 Git 的内容（见 `.gitignore`）：`.venv/`、`build/`、`dist/`、用户 `output/`、日志、个人 PDF、本地偏好等。  
-**预编译安装包**请到 GitHub **Releases** 下载，不要从仓库里找 `dist/`。
+**不会**进入版本库的内容（见 `.gitignore`）：`.venv/`、`build/`、`dist/`、用户 `output/`、日志、个人 PDF、本地偏好等。  
+预编译绿色包请到仓库的 **Releases**（若已发布）下载；源码树中默认不包含 `dist/`。
 
 ---
 
 ## 自构建 / 打包（绿色 zip）
 
 ```powershell
-# 建议先 dev_setup，再：
+# 建议先完成环境准备，再：
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts\build_gui_onedir.ps1
 ```
 
-产物（均在本地 `dist/`，**默认不进 Git**）：
+产物（均在本地 `dist/`）：
 
 | 路径 | 含义 |
 | --- | --- |
@@ -161,51 +160,6 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts\build_installer.ps1
 ```
 
 更细说明见 `docs/04-打包与分发.md`。
-
----
-
-## 开源到 GitHub / 发布 Release（推荐流程）
-
-### 你需要准备什么
-
-1. 一个 **GitHub 账号**
-2. 在网页上 **新建空仓库**（不要勾选自动添加 README，避免与本地冲突），或让脚本引导创建  
-3. 本机已安装 **Git**；若要用一键发 Release，再装 **[GitHub CLI](https://cli.github.com/)** 并 `gh auth login`
-
-### 首次：初始化并配置远程（交互）
-
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts\open_source_init.ps1
-```
-
-脚本会交互完成大致这些事：
-
-- `git init`（若尚未初始化）
-- 检查 `.gitignore`，提示是否有不该提交的大文件 / PDF
-- 可选：输入远程地址 `https://github.com/<你>/<仓库>.git` 并 `git remote add origin`
-- 若已安装 `gh`：可选择 `gh repo create` 创建远程仓库
-- 引导首次 `git add` / `commit`（**默认不自动 push**，需你确认）
-
-### 日常：构建并发布最新包到 Releases
-
-```powershell
-# 构建 + 打 tag + 用 gh 上传最新 zip（有确认提示）
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts\release.ps1
-
-# 只构建不发布
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts\release.ps1 -BuildOnly
-
-# 只检查待提交文件是否干净
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts\release.ps1 -CheckOnly
-```
-
-策略（方案 A）：
-
-- **Git 仓库**：源码、文档、脚本  
-- **GitHub Releases**：仅挂载**当前版本**的 `JingYe-x.y.z.zip`  
-- 旧 zip 保留在 GitHub Release 历史即可，不必塞进 Git
-
-没有 `gh` 时：脚本仍可构建并打印「请到网页手动上传 zip」的路径。
 
 ---
 
