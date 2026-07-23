@@ -13,7 +13,7 @@ APP_WINDOW_TITLE = "净页 — PDF 清理工作台"
 APP_ABOUT = "选色替换 · 区域遮盖 · 灰度转换 · 批量处理"
 APP_TAGLINE = "把页面上的杂质色清理干净"
 APP_ORG = "JingYe"
-APP_VERSION = "0.2.7"
+APP_VERSION = "0.2.8"
 APP_EXE_NAME = "JingYe"
 # 在线使用说明（帮助菜单 / 关于 中打开）
 DOCS_URL = "https://blog.yilanapp.com/posts/adbbe073/"

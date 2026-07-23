@@ -385,7 +385,9 @@ class RegionPage(QWidget):
             regions=list(self._regions),
             region_dpi=200,
         )
-        self.log.emit(f"区域遮盖导出 → {path}（{len(self._regions)} 个区域）")
+        self.log.emit(
+            f"区域遮盖导出 → {path}（{len(self._regions)} 个区域 · 矢量矩形，不光栅化整页）"
+        )
         self.request_job.emit(req)
 
     def close_doc(self) -> None:

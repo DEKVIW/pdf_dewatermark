@@ -9,7 +9,7 @@ import fitz
 from PIL import Image
 
 from .core.grayscale import pixmap_to_gray_rgb
-from .core.region import fill_rects_array, pdf_rect_to_pixel
+from .core.region import draw_filled_rects_on_page, fill_rects_array, pdf_rect_to_pixel
 from .core.remove import remove_watermark_image
 from .models import ColorMethod, GrayscaleParams, RegionRect, RemoveParams
 from .pdf.document import open_document
@@ -170,13 +170,20 @@ def process_pdf_regions(
     progress: ProgressCb = None,
     should_cancel: CancelCb = None,
 ) -> Path:
+    """
+    区域遮盖导出：在原 PDF 页面上绘制矢量填充矩形，不整页光栅化。
+
+    保留原页内容（文字可选、扫描图原分辨率等），仅叠加纯色矩形。
+    dpi 参数保留以兼容旧调用，矢量路径不使用。
+    """
+    _ = dpi  # 矢量导出不涉及渲染 DPI
     src = Path(input_path)
     dst = Path(output_path)
     dst.parent.mkdir(parents=True, exist_ok=True)
 
     by_page: dict[int, List[RegionRect]] = {}
     for r in regions:
-        by_page.setdefault(r.page_index, []).append(r)
+        by_page.setdefault(int(r.page_index), []).append(r)
 
     doc = open_document(src)
     out = fitz.open()
@@ -187,26 +194,18 @@ def process_pdf_regions(
             if should_cancel and should_cancel():
                 raise RuntimeError("已取消")
             if progress:
-                progress(i, total, f"遮盖第 {idx + 1} 页")
-            page = doc[idx]
-            w, h = page_size(page)
-            page_dpi = resolve_export_dpi(page, float(dpi), avoid_upsample=True)
-            img = page_to_image(page, dpi=page_dpi)
+                progress(i, total, f"矢量遮盖第 {idx + 1} 页")
+            if idx < 0 or idx >= len(doc):
+                raise IndexError(f"页码越界: {idx + 1}")
+            # 复制原页内容（含矢量/位图/文字），再叠加矩形
+            out.insert_pdf(doc, from_page=idx, to_page=idx)
+            page = out[-1]
+            specs = [
+                (r.normalized(), r.color) for r in by_page.get(int(idx), [])
+            ]
+            if specs:
+                draw_filled_rects_on_page(page, specs)
             page = None  # noqa: F841
-            arr = __import__("numpy").array(img)
-            rects_px = []
-            color = (255, 255, 255)
-            for r in by_page.get(idx, []):
-                color = r.color
-                rects_px.append(
-                    pdf_rect_to_pixel(r.normalized(), w, h, img.width, img.height)
-                )
-            if rects_px:
-                arr = fill_rects_array(arr, rects_px, color)
-                img = Image.fromarray(arr)
-            del arr
-            image_to_pdf_page(out, img, w, h, fmt="jpeg", jpeg_quality=92)
-            del img
             _export_page_cleanup(i + 1)
         if progress:
             progress(total, total, "正在保存…")
@@ -316,6 +315,17 @@ def process_pdf_pipeline(
             raise ValueError("已启用区域遮盖，但尚未绘制矩形（请先到区域页绘制）")
     else:
         regions = list(regions or [])
+
+    # 仅区域：走矢量路径，避免无脑光栅化损害清晰度
+    if ordered == [PIPELINE_STEP_REGION]:
+        return process_pdf_regions(
+            input_path,
+            output_path,
+            regions,
+            dpi=int(gray_dpi or 200),
+            progress=progress,
+            should_cancel=should_cancel,
+        )
 
     # 导出编码：有选色参数则跟随其预设；否则均衡默认
     if remove_params is not None:
